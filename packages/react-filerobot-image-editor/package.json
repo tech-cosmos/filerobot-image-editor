@@ -1,8 +1,8 @@
 {
-  "name": "react-filerobot-image-editor",
-  "version": "4.3.1",
+  "name": "@techcosmos/image-editor",
+  "version": "4.3.3",
   "license": "MIT",
-  "author": "Scaleflex",
+  "author": "Cosmos Tech",
   "homepage": "https://github.com/scaleflex/filerobot-image-editor#readme",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
