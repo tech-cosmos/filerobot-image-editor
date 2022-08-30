@@ -1,29 +1,31 @@
 /** External Dependencies */
-import React, { useEffect, useRef, useState } from 'react';
-import MenuItem from '@scaleflex/ui/core/menu-item';
-import SaveAs from '@scaleflex/icons/save-as';
-import Label from '@scaleflex/ui/core/label';
+import React, { useEffect, useRef, useState } from "react";
+import MenuItem from "@scaleflex/ui/core/menu-item";
+import SaveAs from "@scaleflex/icons/save-as";
+import Label from "@scaleflex/ui/core/label";
 
 /** Internal Dependencies */
-import { useStore, useTransformedImgData } from 'hooks';
-import getFileFullName from 'utils/getFileFullName';
+import { useStore, useTransformedImgData } from "hooks";
+import getFileFullName from "utils/getFileFullName";
 import {
   CLOSING_REASONS,
   ELLIPSE_CROP,
   SUPPORTED_IMAGE_TYPES,
-} from 'utils/constants';
-import { HIDE_LOADER, SET_FEEDBACK, SHOW_LOADER } from 'actions';
-import Modal from 'components/common/Modal';
-import Slider from 'components/common/Slider';
-import restrictNumber from 'utils/restrictNumber';
-import { Resize } from 'components/tools/Resize';
-import ButtonWithMenu from 'components/common/ButtonWithMenu';
+} from "utils/constants";
+import { HIDE_LOADER, SET_FEEDBACK, SHOW_LOADER } from "actions";
+import Modal from "components/common/Modal";
+import Slider from "components/common/Slider";
+import restrictNumber from "utils/restrictNumber";
+import { Resize } from "components/tools/Resize";
+import ButtonWithMenu from "components/common/ButtonWithMenu";
 import {
   StyledFileExtensionSelect,
   StyledFileNameInput,
   StyledQualityWrapper,
   StyledResizeOnSave,
-} from './Topbar.styled';
+} from "./Topbar.styled";
+
+import { Button } from "@mantine/core";
 
 const sliderStyle = { marginBottom: 16 };
 const saveButtonWrapperStyle = { width: 67 }; // 67px same width as tabs bar
@@ -58,8 +60,8 @@ const SaveButton = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [imageFileInfo, setImageFileInfo] = useState({ quality: 0.92 });
   const transformImgFn = useTransformedImgData();
-  const isQualityAcceptable = ['jpeg', 'jpg', 'webp'].includes(
-    imageFileInfo.extension,
+  const isQualityAcceptable = ["jpeg", "jpg", "webp"].includes(
+    imageFileInfo.extension
   );
   const isBlockerError = feedback.duration === 0;
 
@@ -75,7 +77,7 @@ const SaveButton = () => {
     const onSaveFn = optionSaveFnRef.current || onSave;
     const savingResult = onSaveFn(
       transformedData.imageData,
-      transformedData.designState,
+      transformedData.designState
     );
 
     const hideLoadingSpinner = () => {
@@ -101,15 +103,15 @@ const SaveButton = () => {
 
   const validateInfoThenSave = () => {
     const onSaveFn = optionSaveFnRef.current || onSave;
-    if (typeof onSaveFn !== 'function') {
-      throw new Error('Please provide onSave function handler.');
+    if (typeof onSaveFn !== "function") {
+      throw new Error("Please provide onSave function handler.");
     }
     if (!imageFileInfo.name || !imageFileInfo.extension) {
       dispatch({
         type: SET_FEEDBACK,
         payload: {
           feedback: {
-            message: t('nameIsRequired'),
+            message: t("nameIsRequired"),
           },
         },
       });
@@ -140,14 +142,14 @@ const SaveButton = () => {
       const onSaveFn = optionSaveFnRef.current || onSave;
       onSaveFn(
         transformedCloudimageData.imageData,
-        transformedCloudimageData.designState,
+        transformedCloudimageData.designState
       );
       return;
     }
 
     if (
       !optionSaveFnRef.current &&
-      typeof onBeforeSave === 'function' &&
+      typeof onBeforeSave === "function" &&
       onBeforeSave(imageFileInfo) === false
     ) {
       validateInfoThenSave();
@@ -168,12 +170,12 @@ const SaveButton = () => {
   };
 
   const changeSaveFnAndTriggerAnother = (saveFn, fnToTrigger) => {
-    if (typeof saveFn === 'function') {
+    if (typeof saveFn === "function") {
       optionSaveFnRef.current = saveFn;
       fnToTrigger();
     } else {
       throw new Error(
-        'onSave function callback is required as an argument to the passed function.',
+        "onSave function callback is required as an argument to the passed function."
       );
     }
   };
@@ -183,10 +185,10 @@ const SaveButton = () => {
       const { name, extension } = getFileFullName(
         originalImage.name,
         forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
-          ? 'png'
+          ? "png"
           : SUPPORTED_IMAGE_TYPES.includes(
-              defaultSavedImageType?.toLowerCase(),
-            ) && defaultSavedImageType,
+              defaultSavedImageType?.toLowerCase()
+            ) && defaultSavedImageType
       );
 
       setImageFileInfo({ ...imageFileInfo, name, extension });
@@ -217,16 +219,16 @@ const SaveButton = () => {
           ...option,
           key: `${option.label || i}-option-key`,
           onClick:
-            typeof option.onClick === 'function'
+            typeof option.onClick === "function"
               ? () =>
                   option.onClick(
                     (saveCallback) =>
                       changeSaveFnAndTriggerAnother(
                         saveCallback,
-                        triggerSaveHandler,
+                        triggerSaveHandler
                       ),
                     (saveCallback) =>
-                      changeSaveFnAndTriggerAnother(saveCallback, startSaving),
+                      changeSaveFnAndTriggerAnother(saveCallback, startSaving)
                   )
               : undefined,
         }))
@@ -234,29 +236,26 @@ const SaveButton = () => {
 
   return (
     <>
-      <ButtonWithMenu
-        className="FIE_topbar-save"
-        color="primary"
-        label={t('save')}
+      <Button
+        fullWidth
         onClick={triggerSaveHandler}
-        menuPosition="bottom"
-        menuItems={menuItems}
-        menuStyle={saveButtonMenuStyle}
-        wrapperStyle={saveButtonWrapperStyle}
+        sx={{ marginBottom: 20 }}
         disabled={isLoadingGlobally || isBlockerError}
-      />
+      >
+        Save
+      </Button>
       {isModalOpened && (
         <Modal
           className="FIE_save-modal"
-          title={t('saveAsModalLabel')}
+          title={t("saveAsModalLabel")}
           Icon={(props) => (
-            <SaveAs color={theme.palette['accent-primary']} {...props} />
+            <SaveAs color={theme.palette["accent-primary"]} {...props} />
           )}
           isOpened={isModalOpened}
           onCancel={cancelModal}
           onDone={validateInfoThenSave}
-          doneLabel={t('save')}
-          cancelLabel={t('cancel')}
+          doneLabel={t("save")}
+          cancelLabel={t("cancel")}
           doneButtonColor="primary"
           areButtonsDisabled={isLoadingGlobally}
           zIndex={11110}
@@ -266,7 +265,7 @@ const SaveButton = () => {
             value={imageFileInfo.name}
             onChange={changeFileName}
             size="sm"
-            placeholder={t('name')}
+            placeholder={t("name")}
             error={Boolean(imageFileInfo.name)}
             focusOnMount
           />
@@ -276,7 +275,7 @@ const SaveButton = () => {
               setImageFileInfo({ ...imageFileInfo, extension: ext })
             }
             value={imageFileInfo.extension}
-            placeholder={t('extension')}
+            placeholder={t("extension")}
             size="sm"
           >
             {SUPPORTED_IMAGE_TYPES.map((ext) => (
@@ -287,7 +286,7 @@ const SaveButton = () => {
           </StyledFileExtensionSelect>
           {isQualityAcceptable && (
             <StyledQualityWrapper className="FIE_save-quality-wrapper">
-              <Label>{t('quality')}</Label>
+              <Label>{t("quality")}</Label>
               <Slider
                 annotation="%"
                 min={1}
@@ -300,7 +299,7 @@ const SaveButton = () => {
             </StyledQualityWrapper>
           )}
           <StyledResizeOnSave className="FIE_save-resize-wrapper">
-            <Label>{t('resize')}</Label>
+            <Label>{t("resize")}</Label>
             <Resize
               onChange={resizeImageFile}
               currentSize={imageFileInfo?.size || {}}

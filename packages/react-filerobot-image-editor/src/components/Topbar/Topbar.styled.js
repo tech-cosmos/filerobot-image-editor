@@ -1,10 +1,10 @@
 /** External Dependencies */
-import styled from 'styled-components';
-import Button from '@scaleflex/ui/core/button';
-import IconButton from '@scaleflex/ui/core/icon-button';
-import Input from '@scaleflex/ui/core/input';
-import Label from '@scaleflex/ui/core/label';
-import Select from '@scaleflex/ui/core/select';
+import styled from "styled-components";
+import Button from "@scaleflex/ui/core/button";
+import IconButton from "@scaleflex/ui/core/icon-button";
+import Input from "@scaleflex/ui/core/input";
+import Label from "@scaleflex/ui/core/label";
+import Select from "@scaleflex/ui/core/select";
 
 const StyledTopbar = styled.div`
   padding: 12px 12px 8px 12px;
@@ -13,11 +13,11 @@ const StyledTopbar = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   ${({ reverseDirection }) =>
-    reverseDirection ? 'flex-direction: row-reverse' : ''};
+    reverseDirection ? "flex-direction: row-reverse" : ""};
 
-  [data-phone='true'] & {
+  [data-phone="true"] & {
     padding: 6px 6px 4px 6px;
   }
   overflow: auto;
@@ -31,7 +31,7 @@ const StyledHistoryButtonsWrapper = styled.div`
 `;
 
 const StyledHistoryButton = styled(IconButton)`
-  margin: ${({ margin }) => margin ?? '0 4px'};
+  margin: ${({ margin }) => margin ?? "0 4px"};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,7 +47,7 @@ const StyledDimensionsLabel = styled(Label)`
 const StyledSmallButton = styled(IconButton)`
   width: 20px;
   height: 20px;
-  margin: 0 ${(props) => props.horizontalMargin ?? '4px'};
+  margin: 0 ${(props) => props.horizontalMargin ?? "4px"};
   padding: 4px;
 `;
 
@@ -55,7 +55,7 @@ const StyledFlexCenterAlignedContainer = styled.div`
   display: flex;
   align-items: center;
   ${({ reverseDirection }) =>
-    reverseDirection ? 'flex-direction: row-reverse' : ''};
+    reverseDirection ? "flex-direction: row-reverse" : ""};
 `;
 
 const StyledZoomPercentageLabel = styled(Label)`

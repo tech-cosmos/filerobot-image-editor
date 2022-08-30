@@ -1,39 +1,40 @@
 /** External Dependencies */
-import React, { memo, useCallback, useEffect, useState, useRef } from 'react';
+import React, { memo, useCallback, useEffect, useState, useRef } from "react";
+import { MantineProvider } from "@mantine/core";
 
 /** Internal Dependencies */
-import MainCanvas from 'components/MainCanvas';
-import { ROOT_CONTAINER_CLASS_NAME } from 'utils/constants';
-import Topbar from 'components/Topbar';
-import Tabs from 'components/Tabs';
-import ToolsBar from 'components/ToolsBar';
+import MainCanvas from "components/MainCanvas";
+import { ROOT_CONTAINER_CLASS_NAME } from "utils/constants";
+import Topbar from "components/Topbar";
+import Tabs from "components/Tabs";
+import ToolsBar from "components/ToolsBar";
 import {
   HIDE_LOADER,
   SET_FEEDBACK,
   SET_ORIGINAL_IMAGE,
   SHOW_LOADER,
   UPDATE_STATE,
-} from 'actions';
-import FeedbackPopup from 'components/FeedbackPopup';
-import loadImage from 'utils/loadImage';
+} from "actions";
+import FeedbackPopup from "components/FeedbackPopup";
+import loadImage from "utils/loadImage";
 import {
   usePhoneScreen,
   useResizeObserver,
   useStore,
   useTransformedImgData,
-} from 'hooks';
-import Spinner from 'components/common/Spinner';
-import { getBackendTranslations } from 'utils/translator';
-import cloudimageQueryToDesignState from 'utils/cloudimageQueryToDesignState';
-import finetunesStrsToClasses from 'utils/finetunesStrsToClasses';
-import filterStrToClass from 'utils/filterStrToClass';
-import isSameImage from 'utils/isSameImage';
+} from "hooks";
+import Spinner from "components/common/Spinner";
+import { getBackendTranslations } from "utils/translator";
+import cloudimageQueryToDesignState from "utils/cloudimageQueryToDesignState";
+import finetunesStrsToClasses from "utils/finetunesStrsToClasses";
+import filterStrToClass from "utils/filterStrToClass";
+import isSameImage from "utils/isSameImage";
 import {
   StyledAppWrapper,
   StyledMainContent,
   StyledCanvasAndTools,
   StyledPhoneToolsAndTabs,
-} from './App.styled';
+} from "./App.styled";
 
 const App = () => {
   const {
@@ -120,7 +121,7 @@ const App = () => {
 
       imageBeingLoadedSrc.current = imgSrc;
 
-      if (typeof imgToLoad === 'string') {
+      if (typeof imgToLoad === "string") {
         loadImage(imgToLoad, defaultSavedImageName)
           .then(setNewOriginalImage)
           .catch(setError)
@@ -129,7 +130,7 @@ const App = () => {
         setNewOriginalImage(imgToLoad);
         triggerResolve();
       } else {
-        setError(t('invalidImageError'));
+        setError(t("invalidImageError"));
         triggerResolve();
       }
     });
@@ -137,7 +138,7 @@ const App = () => {
   const promptDialogIfHasChangeNotSaved = (e) => {
     if (haveNotSavedChangesRef.current) {
       e.preventDefault();
-      e.returnValue = '';
+      e.returnValue = "";
     }
   };
 
@@ -180,7 +181,7 @@ const App = () => {
       if (newImgSrc && !isSameImage(newImgSrc, originalImage)) {
         handleLoading(() => [
           loadAndSetOriginalImage(newImgSrc).then(
-            updateDesignStateWithLoadableOne,
+            updateDesignStateWithLoadableOne
           ),
         ]);
       } else {
@@ -193,7 +194,7 @@ const App = () => {
     if (
       Object.keys(shownImageDimensions || {}).length > 0 &&
       !Object.keys(shownImageDimensions).some(
-        (k) => !shownImageDimensions[k],
+        (k) => !shownImageDimensions[k]
       ) &&
       originalImage &&
       useCloudimage &&
@@ -205,7 +206,7 @@ const App = () => {
         payload: cloudimageQueryToDesignState(
           cloudimage.loadableQuery,
           shownImageDimensions,
-          originalImage,
+          originalImage
         ),
       });
       cloudimageQueryLoaded.current = true;
@@ -216,7 +217,7 @@ const App = () => {
     let isUnmounted = false;
     if (observePluginContainerSize && pluginRootRef.current) {
       observeResize(pluginRootRef.current.parentNode, ({ width, height }) =>
-        setRootSize({ width, height }),
+        setRootSize({ width, height })
       );
     } else if (rootSize.width && rootSize.height && !isUnmounted) {
       setRootSize({ width: undefined, height: undefined });
@@ -243,21 +244,21 @@ const App = () => {
     isFirstRender.current = false;
 
     if (window && !avoidChangesNotSavedAlertOnLeave) {
-      window.addEventListener('beforeunload', promptDialogIfHasChangeNotSaved);
+      window.addEventListener("beforeunload", promptDialogIfHasChangeNotSaved);
     }
 
     return () => {
       if (window && !avoidChangesNotSavedAlertOnLeave) {
         window.removeEventListener(
-          'beforeunload',
-          promptDialogIfHasChangeNotSaved,
+          "beforeunload",
+          promptDialogIfHasChangeNotSaved
         );
       }
     };
   }, []);
 
   useEffect(() => {
-    if (updateStateFnRef && typeof updateStateFnRef === 'object') {
+    if (updateStateFnRef && typeof updateStateFnRef === "object") {
       updateStateFnRef.current = (newStatePartObjOrFn) => {
         dispatch({
           type: UPDATE_STATE,
@@ -268,7 +269,7 @@ const App = () => {
   }, [updateStateFnRef, dispatch]);
 
   useEffect(() => {
-    if (getCurrentImgDataFnRef && typeof getCurrentImgDataFnRef === 'object') {
+    if (getCurrentImgDataFnRef && typeof getCurrentImgDataFnRef === "object") {
       getCurrentImgDataFnRef.current = transformImgFn;
     }
   }, [transformImgFn]);
@@ -277,34 +278,42 @@ const App = () => {
     haveNotSavedChangesRef.current = haveNotSavedChanges;
   }, [haveNotSavedChanges]);
 
+  const myTheme = {
+    colorScheme: "light",
+    primaryColor: "orange",
+    defaultRadius: 0,
+  };
+
   return (
-    <StyledAppWrapper
-      className={ROOT_CONTAINER_CLASS_NAME}
-      data-phone={isPhoneScreen}
-      ref={pluginRootRef}
-      $size={rootSize}
-    >
-      {isLoadingGlobally && <Spinner label={t('loading')} />}
-      {!showCanvasOnly && <Topbar />}
-      {originalImage && feedback.duration !== 0 && (
-        <StyledMainContent className="FIE_main-container">
-          {!isPhoneScreen && !showCanvasOnly && <Tabs />}
-          <StyledCanvasAndTools className="FIE_editor-content">
-            <MainCanvas />
-            {!showCanvasOnly &&
-              (isPhoneScreen ? (
-                <StyledPhoneToolsAndTabs className="FIE_phone-tools-tabs-wrapper">
+    <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
+      <StyledAppWrapper
+        className={ROOT_CONTAINER_CLASS_NAME}
+        data-phone={isPhoneScreen}
+        ref={pluginRootRef}
+        $size={rootSize}
+      >
+        {isLoadingGlobally && <Spinner label={t("loading")} />}
+        {!showCanvasOnly && <Topbar />}
+        {originalImage && feedback.duration !== 0 && (
+          <StyledMainContent className="FIE_main-container">
+            {!isPhoneScreen && !showCanvasOnly && <Tabs />}
+            <StyledCanvasAndTools className="FIE_editor-content">
+              <MainCanvas />
+              {!showCanvasOnly &&
+                (isPhoneScreen ? (
+                  <StyledPhoneToolsAndTabs className="FIE_phone-tools-tabs-wrapper ">
+                    <ToolsBar />
+                    <Tabs />
+                  </StyledPhoneToolsAndTabs>
+                ) : (
                   <ToolsBar />
-                  <Tabs />
-                </StyledPhoneToolsAndTabs>
-              ) : (
-                <ToolsBar />
-              ))}
-          </StyledCanvasAndTools>
-        </StyledMainContent>
-      )}
-      <FeedbackPopup />
-    </StyledAppWrapper>
+                ))}
+            </StyledCanvasAndTools>
+          </StyledMainContent>
+        )}
+        <FeedbackPopup />
+      </StyledAppWrapper>
+    </MantineProvider>
   );
 };
 

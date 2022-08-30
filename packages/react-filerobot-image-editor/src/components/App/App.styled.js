@@ -1,10 +1,10 @@
 /** External Dependencies */
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const StyledAppWrapper = styled.div.attrs(({ $size = {} }) => ({
   style: {
-    width: $size.width ?? '100%',
-    height: $size.height ?? '100%',
+    width: $size.width ?? "100%",
+    height: $size.height ?? "100%",
   },
 }))`
   display: flex;
@@ -17,7 +17,7 @@ const StyledAppWrapper = styled.div.attrs(({ $size = {} }) => ({
   overflow: auto;
   position: relative;
   min-height: 250px;
-  background: ${({ theme }) => theme.palette['bg-secondary']};
+  background: ${({ theme }) => theme.palette["bg-secondary"]};
 `;
 
 const StyledMainContent = styled.div`
@@ -29,7 +29,7 @@ const StyledMainContent = styled.div`
   height: calc(100% - 95px); // 95px = possible max height of topbar w/ spaces
   flex-grow: 1;
 
-  [data-phone='true'] & {
+  [data-phone="true"] & {
     padding: 0;
   }
 `;
@@ -49,6 +49,7 @@ const StyledPhoneToolsAndTabs = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  position: relative;
 `;
 
 export {
