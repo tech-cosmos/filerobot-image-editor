@@ -48,6 +48,7 @@ const Topbar = () => {
           )}
           <CloseButton />
         </StyledFlexCenterAlignedContainer>
+        {showBackButton ? <BackButton /> : <CloseButton />}
       </StyledTopbar>
     </div>
   );

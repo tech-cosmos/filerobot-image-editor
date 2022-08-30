@@ -20,7 +20,7 @@ const RotateOptions = () => {
     config,
   } = useStore();
   const rotateConfig = {
-    angle: 90,
+    angle: 30,
   };
 
   const changeRotation = useDebouncedCallback((_e, newRotation) => {
