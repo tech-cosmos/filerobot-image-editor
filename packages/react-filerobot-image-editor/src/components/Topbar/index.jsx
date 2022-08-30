@@ -24,8 +24,10 @@ const Topbar = () => {
   } = useStore();
 
   return (
-    <div style={{ width: "80%" }}>
-      <SaveButton />
+    <div style={{ width: "100%" }}>
+      <div style={{ display: "flex" }}>
+        <SaveButton />
+      </div>
 
       <StyledTopbar reverseDirection={showBackButton} className="FIE_topbar">
         <StyledFlexCenterAlignedContainer
@@ -44,8 +46,8 @@ const Topbar = () => {
               <CanvasZooming />
             </>
           )}
+          <CloseButton />
         </StyledFlexCenterAlignedContainer>
-        <CloseButton />
       </StyledTopbar>
     </div>
   );

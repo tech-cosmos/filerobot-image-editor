@@ -21,7 +21,7 @@ const StyledTabItem = styled.div(
     border-radius: 4px;
     display: flex;
     flex-direction: column;
-    background: ${theme.palette["bg-primary"]};
+    background: '${theme.palette["bg-primary"]}';
     align-items: center;
     justify-content: center;
     margin-bottom: 8px;

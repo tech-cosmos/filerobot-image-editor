@@ -239,7 +239,7 @@ const SaveButton = () => {
       <Button
         fullWidth
         onClick={triggerSaveHandler}
-        sx={{ marginBottom: 20 }}
+        sx={{ marginBottom: 10 }}
         disabled={isLoadingGlobally || isBlockerError}
       >
         Save

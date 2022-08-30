@@ -1,40 +1,40 @@
 /** Internal Dependencies */
-import { MIN_CROP, TABS_IDS, TOOLS_IDS } from 'utils/constants';
+import { MIN_CROP, TABS_IDS, TOOLS_IDS } from "utils/constants";
 
 export default {
   theme: {
     palette: {
-      'bg-primary-active': '#ECF3FF',
+      "bg-primary-active": "#ECF3FF",
     },
     typography: {
-      fontFamily: 'Roboto, Arial',
+      fontFamily: "Roboto, Arial",
     },
   },
   annotationsCommon: {
-    fill: '#000000', // or should be no color? === undefined
-    stroke: '#000000', // or should be no color? === undefined
+    fill: "#000000", // or should be no color? === undefined
+    stroke: "#000000", // or should be no color? === undefined
     strokeWidth: 0,
     shadowOffsetX: 0,
     shadowOffsetY: 0,
     shadowBlur: 0,
-    shadowColor: '#000000', // or should be no color? === undefined
+    shadowColor: "#000000", // or should be no color? === undefined
     shadowOpacity: 1,
     opacity: 1,
   },
   [TOOLS_IDS.TEXT]: {
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    fontFamily: 'Arial',
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    fontFamily: "Arial",
     fonts: [
-      { label: 'Arial', value: 'Arial' },
-      'Tahoma',
-      'Sans-serif',
-      { label: 'Comic Sans', value: 'Comic-sans' },
+      { label: "Arial", value: "Arial" },
+      "Tahoma",
+      "Sans-serif",
+      { label: "Comic Sans", value: "Comic-sans" },
     ],
     fontSize: 14,
     letterSpacing: 0,
     lineHeight: 1,
-    align: 'left', // left, center, right
-    fontStyle: 'normal', // 'bold', 'italic', 'bold italic'
+    align: "left", // left, center, right
+    fontStyle: "normal", // 'bold', 'italic', 'bold italic'
     onFontChange: undefined,
   },
   [TOOLS_IDS.IMAGE]: {
@@ -50,15 +50,15 @@ export default {
   [TOOLS_IDS.PEN]: {
     strokeWidth: 1,
     tension: 0.5,
-    lineCap: 'round',
+    lineCap: "round",
   },
   [TOOLS_IDS.LINE]: {
-    lineCap: 'butt', // butt/round/square
+    lineCap: "butt", // butt/round/square
     strokeWidth: 1,
   },
   [TOOLS_IDS.ARROW]: {
     strokeWidth: 6,
-    lineCap: 'butt',
+    lineCap: "butt",
     pointerLength: undefined,
     pointerWidth: undefined,
   },
@@ -74,7 +74,7 @@ export default {
     height: null,
     maxWidth: null,
     maxHeight: null,
-    ratio: 'original',
+    ratio: "original",
     ratioTitleKey: undefined,
     noPresets: false,
     autoResize: false,
@@ -83,7 +83,7 @@ export default {
   },
   [TOOLS_IDS.ROTATE]: {
     angle: 60,
-    componentType: 'slider', // slider | buttons
+    componentType: "slider", // slider | buttons
   },
   tabsIds: [],
   defaultTabId: TABS_IDS.ADJUST,
@@ -97,7 +97,7 @@ export default {
   forceToPngInEllipticalCrop: false,
   useBackendTranslations: true,
   translations: null,
-  language: 'en',
+  language: "en",
   avoidChangesNotSavedAlertOnLeave: false,
   loadableDesignState: null,
   moreSaveOptions: [],
@@ -106,15 +106,15 @@ export default {
   showBackButton: false,
   useCloudimage: false,
   cloudimage: {
-    token: '',
+    token: "",
     dontPrefixUrl: false,
-    domain: 'cloudimg.io',
-    version: '',
-    loadableQuery: '',
+    domain: "cloudimg.io",
+    version: "",
+    loadableQuery: "",
     secureProtocol: true,
     imageSealing: {
       enable: false,
-      salt: '',
+      salt: "",
       charCount: 10,
       includeParams: [],
     },

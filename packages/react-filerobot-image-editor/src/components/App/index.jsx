@@ -1,6 +1,6 @@
 /** External Dependencies */
 import React, { memo, useCallback, useEffect, useState, useRef } from "react";
-import { MantineProvider } from "@mantine/core";
+import { LoadingOverlay, MantineProvider } from "@mantine/core";
 
 /** Internal Dependencies */
 import MainCanvas from "components/MainCanvas";
@@ -61,6 +61,7 @@ const App = () => {
     showCanvasOnly,
     getCurrentImgDataFnRef,
     updateStateFnRef,
+    toolBarProps,
   } = config;
 
   const [observeResize, unobserveElement] = useResizeObserver();
@@ -292,7 +293,7 @@ const App = () => {
         ref={pluginRootRef}
         $size={rootSize}
       >
-        {isLoadingGlobally && <Spinner label={t("loading")} />}
+        <LoadingOverlay visible={isLoadingGlobally} />
         {!showCanvasOnly && <Topbar />}
         {originalImage && feedback.duration !== 0 && (
           <StyledMainContent className="FIE_main-container">

@@ -1,10 +1,10 @@
 /** External Dependencies */
-import React from 'react';
-import PropTypes from 'prop-types';
-import Label from '@scaleflex/ui/core/label';
+import React from "react";
+import PropTypes from "prop-types";
+import Label from "@scaleflex/ui/core/label";
 
 /** Internal Dependencies */
-import { StyledSpinnerWrapper, StyledSpinner } from './Spinner.styled';
+import { StyledSpinnerWrapper, StyledSpinner } from "./Spinner.styled";
 
 const Spinner = ({ label }) => {
   return (
@@ -16,7 +16,7 @@ const Spinner = ({ label }) => {
 };
 
 Spinner.defaultProps = {
-  label: '',
+  label: "",
 };
 
 Spinner.propTypes = {

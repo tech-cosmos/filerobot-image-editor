@@ -1,13 +1,14 @@
 /** External Dependencies */
-import React, { useCallback, memo } from 'react';
-import PropTypes from 'prop-types';
+import React, { useCallback, memo } from "react";
+import PropTypes from "prop-types";
 
 /** Internal Dependencies */
-import { StyledTabItem, StyledTabItemLabel } from './Tabs.styled';
+import { StyledTabItem, StyledTabItemLabel } from "./Tabs.styled";
+import { ActionIcon } from "@mantine/core";
 
 const TabItem = ({ id, label, Icon, isSelected, onClick }) => {
   const handleClick = useCallback(() => {
-    if (typeof onClick === 'function') {
+    if (typeof onClick === "function") {
       onClick(id);
     }
   }, [id]);
@@ -18,7 +19,10 @@ const TabItem = ({ id, label, Icon, isSelected, onClick }) => {
       aria-selected={isSelected}
       onClick={handleClick}
     >
-      <Icon />
+      <ActionIcon variant="transparent">
+        <Icon />
+      </ActionIcon>
+
       {label && (
         <StyledTabItemLabel className="FIE_tab-label">
           {label}
